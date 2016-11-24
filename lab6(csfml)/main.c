@@ -157,9 +157,12 @@ int main()
     }
     
     
-    while (maxSum==-1)
+    Point* way = (Point*) malloc(sizeof(Point) * 100);
+
+    
+    while (maxSum==-1 )
     {
-        
+        count=0;
     for(j=0;j<10;j++)
        for(k=0;k<10;k++)
         {
@@ -167,6 +170,8 @@ int main()
             sscale.y=64+64*k;
             
             grassSprite[count]=sfSprite_create();
+            goldIconText[goldSpriteCount] = sfText_create();
+
             
             if(rand()%5==0 && (count!=0 && count!=99))
             {
@@ -188,8 +193,7 @@ int main()
                             gold=(rand()%18)*5+10;
                        map[rtrnX(count)][rtrnY(count)]=gold;
                         
-                       
-                        goldIconText[goldSpriteCount] = sfText_create();
+                      //  goldIconText[goldSpriteCount] = sfText_create();
                         textColor=sfBlack;
                         
                         goldScale.x=72+64*j;
@@ -201,17 +205,12 @@ int main()
                         
                         sprintf(goldArr, "%d",gold);
                         sfText_setString(goldIconText[goldSpriteCount], goldArr);
-
-                        
                     goldSpriteCount++;
-                        
                     }
             }
             sfSprite_setPosition(grassSprite[count], sscale);
-            count++;
+           count++;
         }
-        
-        Point* way = (Point*) malloc(sizeof(Point) * 100);
         
         findWay(0, 0, 0, way, 0);
     }
