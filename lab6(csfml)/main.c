@@ -170,13 +170,13 @@ int main()
             sscale.y=64+64*k;
             
             grassSprite[count]=sfSprite_create();
-            goldIconText[goldSpriteCount] = sfText_create();
 
             
             if(rand()%5==0 && (count!=0 && count!=99))
             {
                 sfSprite_setTexture(grassSprite[count],boxTexture, sfTrue);
                 map[rtrnX(count)][rtrnY(count)]=-1;
+                
                 
             }
             else
@@ -193,7 +193,7 @@ int main()
                             gold=(rand()%18)*5+10;
                        map[rtrnX(count)][rtrnY(count)]=gold;
                         
-                      //  goldIconText[goldSpriteCount] = sfText_create();
+                        goldIconText[goldSpriteCount] = sfText_create();
                         textColor=sfBlack;
                         
                         goldScale.x=72+64*j;
