@@ -67,6 +67,8 @@ int main()
     
     sfFont* font;
     
+  
+    
     sfText* text;
     sfText* goldText;
     sfText* goldIconText[20];
@@ -75,6 +77,17 @@ int main()
     int i,j,k,count=0,goldSpriteCount=0,gold=0,currentGoldCount=0,s=0,t=0;
     int stepMap[10][10];
     char goldArr[4];
+    
+    sfClock* fpsClock;
+    /*Создание часов*/
+    fpsClock = sfClock_create();
+    if (!fpsClock)
+    {
+        return 1;
+    }
+    
+    int fps = 0;
+    sfClock_restart(fpsClock);
     
     srand((unsigned int)time(NULL));
     
@@ -275,8 +288,6 @@ int main()
     sfSprite_setPosition(goldIconSprite, sscale);
 
     
-
-
     
     printf("%d\n", maxSum);
     
@@ -286,10 +297,9 @@ int main()
     printf("\n");
     i=0;
     
+    
     while (sfRenderWindow_isOpen(window))
     {
-        
-        
 
         while (sfRenderWindow_pollEvent(window, &event))
         {
@@ -297,7 +307,20 @@ int main()
                 sfRenderWindow_close(window);
         }
         
-
+        char buff[15];
+        fps++;
+       if (fmod(sfTime_asSeconds(sfClock_getElapsedTime(fpsClock)),0.25) < 0.001 && fps > 2)
+        {
+            sprintf(buff, "FPS: %d", (int)(fps*(1/ sfTime_asSeconds(sfClock_getElapsedTime(fpsClock)))));
+            sfText_setString(text, buff); /* задаем значение текстовому полю, которое выводит ФПС*/
+        }
+        if (sfTime_asSeconds(sfClock_getElapsedTime(fpsClock)) >= 1)
+        {
+            fps = 0;
+            sfClock_restart(fpsClock);
+        }
+        
+        
         currentScale=sfSprite_getPosition(gnomeSprite);
             if(s==2*64)
             {
