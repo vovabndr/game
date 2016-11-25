@@ -162,7 +162,9 @@ int main()
     
     while (maxSum==-1 )
     {
+        goldSpriteCount=0;
         count=0;
+        
     for(j=0;j<10;j++)
        for(k=0;k<10;k++)
         {
@@ -170,13 +172,11 @@ int main()
             sscale.y=64+64*k;
             
             grassSprite[count]=sfSprite_create();
-
             
             if(rand()%5==0 && (count!=0 && count!=99))
             {
                 sfSprite_setTexture(grassSprite[count],boxTexture, sfTrue);
                 map[rtrnX(count)][rtrnY(count)]=-1;
-                
                 
             }
             else
@@ -213,6 +213,12 @@ int main()
         }
         
         findWay(0, 0, 0, way, 0);
+    }
+    for(j=0;j<10;j++)
+    {
+        for(k=0;k<10;k++)
+            printf("%2d   ",map[j][k]);
+        printf("\n");
     }
     for(j=0;j<10;j++)
         for(k=0;k<10;k++)
@@ -269,12 +275,7 @@ int main()
     sfSprite_setPosition(goldIconSprite, sscale);
 
     
-    for(j=0;j<10;j++)
-    {
-        for(k=0;k<10;k++)
-            printf("%2d   ",map[j][k]);
-        printf("\n");
-    }
+
 
     
     printf("%d\n", maxSum);
