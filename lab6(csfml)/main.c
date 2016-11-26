@@ -30,14 +30,15 @@ int sizeOfWay;
 
 int rtrnX(int numb);
 int rtrnY(int numb);
-void Mdelay(unsigned int mseconds)
-{
-    clock_t goal = mseconds + clock();
-    while (goal > clock());
-}
+void Mdelay(unsigned int mseconds);
+
 void findWay(int x, int y, int sum, Point* way, int counter);
 
-int main()
+void currentJSON();
+void writeMap();
+void readMap();
+
+int main(int argc,char* argv[])
 {
     
     sfVideoMode mode ={768,768,32};
@@ -46,15 +47,16 @@ int main()
     sfTexture* blockTexture;
     sfTexture* grassTexture;
     sfTexture* boxTexture;
-    sfTexture* gnomeTexture;
+    sfTexture* heroTexture;
     sfTexture* goldTexture;
     sfTexture* goldIconTexture;
     sfTexture* doorTexture;
     sfTexture* stepsTexture;
     
+    
     sfSprite* blockSprite[47];
     sfSprite* grassSprite[100];
-    sfSprite* gnomeSprite;
+    sfSprite* heroSprite[8];
     sfSprite* goldSprite[20];
     sfSprite* goldIconSprite;
     sfSprite* doorSprite;
@@ -76,13 +78,17 @@ int main()
     sfText* goldIconText[20];
     sfText* fpsText;
     
+    sfIntRect heroRect;
+    
     sfClock *fpsClock;
     fpsClock = sfClock_create();
 
     
-    int i,j,k,count=0,goldSpriteCount=0,gold=0,currentGoldCount=0,s=0,t=0;
+    int i,j,k,count=0,goldSpriteCount=0,gold=0,currentGoldCount=0,s=0,t=0,check,forS;
     int stepMap[10][10];
     char goldArr[4];
+    heroRect.width=52;
+    heroRect.height=76;
     
     srand((unsigned int)time(NULL));
     
@@ -90,7 +96,7 @@ int main()
     char blockAddress[]="/Users/adimirbondar/Documents/lab/lab6(csfml)/lab6(csfml)/Wall_DelbekeHannes copy.JPG";
     char grassAddress[]="/Users/adimirbondar/Documents/lab/lab6(csfml)/lab6(csfml)/rsz_so4m8w0.png";
     char boxAddress[]="/Users/adimirbondar/Documents/lab/lab6(csfml)/lab6(csfml)/rsz_box.png";
-    char gnomeAddress[]="/Users/adimirbondar/Documents/lab/lab6(csfml)/lab6(csfml)/Mabel's_Sweater_Creator_gnome.png";
+    char heroAddress[]="/Users/adimirbondar/Documents/lab/lab6(csfml)/lab6(csfml)/IMG_7392.PNG";
     char goldAddress[]="/Users/adimirbondar/Documents/lab/lab6(csfml)/lab6(csfml)/rsz_monetary_budget-512.png";
     char doorAddress[]="/Users/adimirbondar/Documents/lab/lab6(csfml)/lab6(csfml)/rsz_1475657141_thumb_100door.png";
     char textAddress[]="/Library/Fonts/Arial Black.ttf";
@@ -118,8 +124,8 @@ int main()
     if (!boxTexture)
         return 5;
     
-    gnomeTexture = sfTexture_createFromFile(gnomeAddress, NULL);
-    if (!gnomeTexture)
+    heroTexture = sfTexture_createFromFile(heroAddress, NULL);
+    if (!heroTexture)
         return 6;
     
     goldTexture = sfTexture_createFromFile(goldAddress, NULL);
@@ -169,6 +175,7 @@ int main()
         sfSprite_setPosition(blockSprite[i+36], sscale);
     }
     
+
     
     Point* way = (Point*) malloc(sizeof(Point) * 100);
     
@@ -248,12 +255,44 @@ int main()
             sfSprite_setPosition(stepsSprite[j][k], sscale);
             
         }
-    
+    //208x304
+  for(i=0;i<4;i++)
+    {  
     sscale.x=64;
     sscale.y=64;
-    gnomeSprite=sfSprite_create();
-    sfSprite_setTexture(gnomeSprite,gnomeTexture, sfTrue);
-    sfSprite_setPosition(gnomeSprite, sscale);
+    heroRect.left=52*i;
+        
+    heroRect.top=162;
+    heroRect.width=52;
+    heroRect.height=76;
+    
+   
+    heroSprite[i]=sfSprite_create();
+    sfSprite_setTexture(heroSprite[i],heroTexture, sfTrue);
+    sfSprite_setTextureRect(heroSprite[i], heroRect);
+    sfSprite_setPosition(heroSprite[i], sscale);
+    
+    }
+
+    
+    for(i=4;i<8;i++)
+    {
+        sscale.x=64;
+        sscale.y=64;
+        heroRect.left=52*(i-3)-52;
+        heroRect.top=0;
+        heroRect.width=52;
+        heroRect.height=76;
+        
+        
+        heroSprite[i]=sfSprite_create();
+        sfSprite_setTexture(heroSprite[i],heroTexture, sfTrue);
+        sfSprite_setTextureRect(heroSprite[i], heroRect);
+        sfSprite_setPosition(heroSprite[i], sscale);
+    }
+    
+    
+    
     
     sscale.x=640;
     sscale.y=640;
@@ -311,12 +350,12 @@ int main()
     
     int fps = 0;
     sfClock_restart(fpsClock);
+    writeMap();
     
+    ///////////////////////////////////////////////////////////////////////////
     while (sfRenderWindow_isOpen(window))
     {
-        
-        
-        
+        check=0;
         while (sfRenderWindow_pollEvent(window, &event))
         {
             if (event.type == sfEvtClosed)
@@ -335,36 +374,48 @@ int main()
             sfClock_restart(fpsClock);
         }
         
-        currentScale=sfSprite_getPosition(gnomeSprite);
-        if(s==2*64)
+        currentScale=sfSprite_getPosition(heroSprite[0]);
+        
+        if(s==128*2)
         {
             s=0;
             t++;
             currentGoldCount+=map[maxWay[t].x][maxWay[t].y];
             
         }
+        for(i=0;i<8;i++){
         if(maxSum!=-1)
         {
             if (maxWay[t+1].x==maxWay[t].x)
-            { if(currentScale.x<704)
             {
-                sscale.x=0.5*1;
+                if(currentScale.x<704)
+                {
+                sscale.x=0.25;
                 sscale.y=0;
-                sfSprite_move(gnomeSprite, sscale);
-                s++;
-            }
+                sfSprite_move(heroSprite[i], sscale);
+               if(i==0)
+                    s++;
+                }
             }
             else if (maxWay[t+1].y==maxWay[t].y)
-            {  if(currentScale.y<704)
             {
+                if(currentScale.y<704)
+                {
                 sscale.x=0;
-                sscale.y=0.5*1;
-                sfSprite_move(gnomeSprite, sscale);
+                sscale.y=0.25;
+                sfSprite_move(heroSprite[i], sscale);
+                    if(i==0)
                 s++;
+                    check=1;
+                }
             }
-            }
-            
         }
+        
+        }
+        
+        
+        
+        
         sprintf(goldArr, "%d",currentGoldCount);
         sfText_setString(goldText, goldArr);
         
@@ -389,21 +440,48 @@ int main()
                 sfRenderWindow_drawSprite(window, stepsSprite[maxWay[i].y][maxWay[i].x], NULL);
         }
         sfRenderWindow_drawSprite(window, doorSprite, NULL);
-        sfRenderWindow_drawSprite(window,gnomeSprite,NULL);
+        forS=s;
+        if(check==0)
+        {
+            if(forS<=64 && forS>0)
+                sfRenderWindow_drawSprite(window,heroSprite[0],NULL);
+            if(forS<=128 && forS>64)
+                sfRenderWindow_drawSprite(window,heroSprite[1],NULL);
+            if(forS<=192 && forS>128)
+                sfRenderWindow_drawSprite(window,heroSprite[2],NULL);
+            if(forS<=256 && forS>192)
+                sfRenderWindow_drawSprite(window,heroSprite[3],NULL);
+
+        }
+        else if (check==1)
+        {
+            if(forS<=64 && forS>0)
+                sfRenderWindow_drawSprite(window,heroSprite[4],NULL);
+            if(forS<=128 && forS>64)
+                sfRenderWindow_drawSprite(window,heroSprite[5],NULL);
+            if(forS<=192 && forS>128)
+                sfRenderWindow_drawSprite(window,heroSprite[6],NULL);
+            if(forS<=256 && forS>192)
+                sfRenderWindow_drawSprite(window,heroSprite[7],NULL);
+        }
+        else
+            sfRenderWindow_drawSprite(window,heroSprite[0],NULL);
+ if(currentScale.x==704 && currentScale.y==704)
+        sfRenderWindow_drawSprite(window,heroSprite[0],NULL);
+        
         sfRenderWindow_drawText(window, text, NULL);
         sfRenderWindow_drawText(window, goldText, NULL);
         sfRenderWindow_drawText(window, fpsText, NULL);
         sfRenderWindow_drawSprite(window,goldIconSprite,NULL);
         
-
         sfRenderWindow_display(window);
     }
-    
+   
     
     sfTexture_destroy(blockTexture);
     sfTexture_destroy(grassTexture);
     sfTexture_destroy(goldTexture);
-    sfTexture_destroy(gnomeTexture);
+    sfTexture_destroy(heroTexture);
     sfTexture_destroy(doorTexture);
     sfText_destroy(goldText);
     sfText_destroy(text);
@@ -472,3 +550,55 @@ int rtrnY(int numb)
     else
         return numb/10;
 }
+
+void Mdelay(unsigned int mseconds)
+{
+    clock_t goal = mseconds + clock();
+    while (goal > clock());
+}
+
+void currentJSON()
+{
+    FILE* mapJson=fopen("/Users/adimirbondar/Documents/lab/lab6(csfml)/lab6(csfml)/map.json", "w");
+    int i,j;
+    fprintf(mapJson,"[\n");
+    for(i=0;i<10;i++)
+    {
+        fprintf(mapJson,"\t");
+        for(j=0;j<10;j++)
+        {
+            if(j!=9)
+            fprintf(mapJson, "[%2d], ",map[i][j]);
+            else
+                fprintf(mapJson, "[%2d]",map[i][j]);
+
+        }
+        fprintf(mapJson,"\n");
+    }
+    fprintf(mapJson,"]");
+    fclose(mapJson);
+    
+}
+
+void writeMap()
+{
+    
+    FILE* mapJson=fopen("/Users/adimirbondar/Documents/lab/map.json", "w");
+    int i,j;
+    for(i=0;i<10;i++)
+        for(j=0;j<10;j++)
+                fprintf(mapJson, "%d ",map[i][j]);
+    fclose(mapJson);
+}
+
+void readMap()
+{
+    FILE* mapJson=fopen("/Users/adimirbondar/Documents/lab/map.json", "r");
+    int i,j;
+    for(i=0;i<10;i++)
+        for(j=0;j<10;j++)
+            fscanf(mapJson,"%d",&map[i][j]);
+    fclose(mapJson);
+    
+}
+

@@ -32,6 +32,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3132C6EC1DE91FE7000CBACB /* map.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = map.json; sourceTree = "<group>"; };
+		3132C6EF1DE9208E000CBACB /* 3953.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 3953.png; path = "lab6(csfml)/3953.png"; sourceTree = "<group>"; };
+		3132C6F01DE9208E000CBACB /* Mabel's_Sweater_Creator_gnome.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Mabel's_Sweater_Creator_gnome.png"; path = "lab6(csfml)/Mabel's_Sweater_Creator_gnome.png"; sourceTree = "<group>"; };
+		3132C6F11DE9208E000CBACB /* monetary_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = monetary_icon.png; path = "lab6(csfml)/monetary_icon.png"; sourceTree = "<group>"; };
+		3132C6F21DE9208E000CBACB /* rsz_1475657141_thumb_100door.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rsz_1475657141_thumb_100door.png; path = "lab6(csfml)/rsz_1475657141_thumb_100door.png"; sourceTree = "<group>"; };
+		3132C6F31DE9208E000CBACB /* rsz_box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rsz_box.png; path = "lab6(csfml)/rsz_box.png"; sourceTree = "<group>"; };
+		3132C6F41DE9208E000CBACB /* rsz_monetary_budget-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rsz_monetary_budget-512.png"; path = "lab6(csfml)/rsz_monetary_budget-512.png"; sourceTree = "<group>"; };
+		3132C6F51DE9208E000CBACB /* rsz_so4m8w0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rsz_so4m8w0.png; path = "lab6(csfml)/rsz_so4m8w0.png"; sourceTree = "<group>"; };
+		3132C6F61DE9208E000CBACB /* steps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = steps.png; path = "lab6(csfml)/steps.png"; sourceTree = "<group>"; };
+		3132C6F71DE9208E000CBACB /* Wall_DelbekeHannes copy.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Wall_DelbekeHannes copy.JPG"; path = "lab6(csfml)/Wall_DelbekeHannes copy.JPG"; sourceTree = "<group>"; };
+		3132C6F81DE92667000CBACB /* IMG_7392.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IMG_7392.PNG; path = "lab6(csfml)/IMG_7392.PNG"; sourceTree = "<group>"; };
 		3135A9371DDB78D000E30A68 /* lab6(csfml) */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "lab6(csfml)"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3135A93A1DDB78D000E30A68 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		3135A9461DDB793B00E30A68 /* libcsfml-graphics.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libcsfml-graphics.dylib"; path = "../../../Downloads/CSFML-2.3-osx-clang-universal/lib/libcsfml-graphics.dylib"; sourceTree = "<group>"; };
@@ -53,10 +64,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3132C6EE1DE9206D000CBACB /* pictures */ = {
+			isa = PBXGroup;
+			children = (
+				3132C6F81DE92667000CBACB /* IMG_7392.PNG */,
+				3132C6F71DE9208E000CBACB /* Wall_DelbekeHannes copy.JPG */,
+				3132C6EF1DE9208E000CBACB /* 3953.png */,
+				3132C6F01DE9208E000CBACB /* Mabel's_Sweater_Creator_gnome.png */,
+				3132C6F11DE9208E000CBACB /* monetary_icon.png */,
+				3132C6F21DE9208E000CBACB /* rsz_1475657141_thumb_100door.png */,
+				3132C6F31DE9208E000CBACB /* rsz_box.png */,
+				3132C6F41DE9208E000CBACB /* rsz_monetary_budget-512.png */,
+				3132C6F51DE9208E000CBACB /* rsz_so4m8w0.png */,
+				3132C6F61DE9208E000CBACB /* steps.png */,
+			);
+			name = pictures;
+			sourceTree = "<group>";
+		};
 		3135A92E1DDB78D000E30A68 = {
 			isa = PBXGroup;
 			children = (
 				3135A9391DDB78D000E30A68 /* lab6(csfml) */,
+				3132C6EE1DE9206D000CBACB /* pictures */,
 				3135A9381DDB78D000E30A68 /* Products */,
 				3135A9411DDB78F400E30A68 /* Frameworks */,
 			);
@@ -74,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				3135A93A1DDB78D000E30A68 /* main.c */,
+				3132C6EC1DE91FE7000CBACB /* map.json */,
 			);
 			path = "lab6(csfml)";
 			sourceTree = "<group>";
