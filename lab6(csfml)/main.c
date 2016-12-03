@@ -69,7 +69,7 @@ int main(int argc,char* argv[])
     
     fpsClock = sfClock_create();
 
-    
+
     int i,j,k,count=0,goldSpriteCount=0,gold=0,currentGoldCount=0,s=0,t=0,check,forS,argvCheck=-1,fps = 0;
     int stepMap[10][10];
     double speed=1;
@@ -158,7 +158,7 @@ int main(int argc,char* argv[])
         sfSprite_setPosition(blockSprite[i+36], sscale);
     }
     
-    //argvCheck=0;
+    argvCheck=1;
     
     if(argvCheck!=0){
     while (maxSum==-1 )
@@ -479,7 +479,7 @@ int main(int argc,char* argv[])
                 sfRenderWindow_drawSprite(window,heroSprite[7],NULL);
         }
  if(currentScale.x==640 && currentScale.y==640)
-        sfRenderWindow_drawSprite(window,heroSprite[0],NULL);
+    sfRenderWindow_drawSprite(window,heroSprite[0],NULL);
         
         
         sfRenderWindow_drawText(window, text, NULL);
@@ -563,19 +563,19 @@ void currentJSON()
     FILE* FakemapJson=fopen("/Users/adimirbondar/Documents/lab/lab6(csfml)/lab6(csfml)/fakemap.json", "w");
     
     int i,j;
-    fprintf(mapJson,"[\n");
+    fprintf(mapJson,"[\n\"map\":\n");
     for(i=0;i<10;i++)
     {
-        fprintf(mapJson,"\t");
+        fprintf(mapJson,"\t[");
         for(j=0;j<10;j++)
         {
             if(j!=9)
-                fprintf(mapJson, "[%2d], ",map[i][j]);
+                fprintf(mapJson, "%2d, ",map[i][j]);
             else
-                fprintf(mapJson, "[%2d]",map[i][j]);
+                fprintf(mapJson, "%2d",map[i][j]);
             
         }
-        fprintf(mapJson,"\n");
+        fprintf(mapJson,"]\n");
     }
     fprintf(mapJson,"]");
     
